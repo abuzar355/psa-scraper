@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const puppeteer = require('puppeteer-extra');
+const puppeteer = require('puppeteer');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const socketIo = require('socket.io');
 const http = require('http');
