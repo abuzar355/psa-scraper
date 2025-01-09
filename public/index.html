@@ -6,11 +6,58 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSA Cards Price Scraper</title>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
 </head>
 <body>
-    <h1>PSA Cards Price Scraper</h1>
+    <header>
+        <nav>
+          <ul>
+            <li><a href="index.html">Price Scraper</a></li>
+            <li><a href="extract-player.html">Extract Player Names</a></li>
+          </ul>
+        </nav>
+      </header>
 
+    <h1>PSA Cards Price Scraper</h1>
+    <!-- Input File Template Instructions -->
+    <div id="instructions">
+        <h3>Input File Requirements:</h3>
+        <ul>
+            <li>The input file must be in <strong>CSV</strong> format.</li>
+            <li>The file should contain the following columns:</li>
+            <ul>
+                <li><strong>Player</strong> - The name of the player (e.g., "Jose Canseco").</li>
+                <li><strong>Set</strong> - The set name (e.g., "1989 Bazooka").</li>
+                <li><strong>Grade</strong> - The grade value (e.g., "10").</li>
+            </ul>
+            <li>Ensure there are no empty rows, and the file is well-formatted.</li>
+            <li>Ensure that in one csv file there should be same grade and set value for all players.</li>
+
+            <li>Example template:
+                <table border="1" cellpadding="10">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Set</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jose Canseco</td>
+                            <td>1989 Bazooka</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>Tony Gwynn</td>
+                            <td>1989 Bazooka</td>
+                            <td>10</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </div>
     <form id="uploadForm" enctype="multipart/form-data">
         <input type="file" id="fileInput" name="fileInput" accept=".csv, .xlsx" required />
         <button id="startScrapingBtn" type="button" onclick="startScraping()">Start Scrape</button>
@@ -49,9 +96,8 @@
                 body: formData
             }).then(response => {
                 if (response.ok) {
-                    alert('Scraping started!');
+                    alert('Scraping done!');
                 } else {
-                    alert('Error starting scrape');
                 }
             });
         }
@@ -62,7 +108,6 @@
                 link.href = URL.createObjectURL(blob);
                 link.download = "updated_file.csv";
                 link.click();
-                updateProgress("Download initiated.");
 }
     </script>
 </body>

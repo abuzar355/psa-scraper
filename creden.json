@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "card-project-2024",
+  "private_key_id": "1f3fe2e5d16a0de1aa5f8e189143f1f397d72b1d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCNZztX4Ms+WoFe\n1KWLDxMse6MRq7bMGmAXRnNJrL8WH9hjZZPePsWgWh1CN/D753ZFmZbjMJ/Xy78q\njBtm/lnu5zp8vk6BUXz6WEFzcnST6aULcslOC6Iv7j1s3kmnL+2h20yeG7OzXILO\nPtVngO1ZAoak965ZdoojWRUOBYrRZrjQtt09gOJC8kMhZQLFziu3furOyJh8pJ9y\nzvBy/yXcZz0dArptQjQGdxlCPRNzEdtsa8kQyPKUkiI0JiXbuEhQZ+GnfncXqewe\nExSdCeiQrLuubJOJz4LJz5oCN1IVisepRpI1IeyL96mc8svDOTtsnE5USsxHUDo2\nF8uouEO9AgMBAAECggEAFqk4GUW/x1Q2zm1IGGiH5fBBz8JT7xK9BTiM9P4tDiJ4\nCbniKtL8K04LHq0baYC3HhasApMs0qcRka6BcmM0eMpwFO9kt78eRyU0sV04Meos\nQTuZ55rgA6Fru6ebaHfls949bEs75HSLdqUa4IBeHo5+ky/UWPxbzVK97TuAez1S\nO9IfMArmacnMWWoiK6oXEjjGJnI9Z4ioeMAAVRXBpJxZgzxvK+qdY2G2RxB4/fbe\nroYDU6wn7swv+CbAvdXSbAB56YEXxb6Bfe/YIjWA8N67iz/gUnjHM74miv3MRNNt\nXVnGFdufCbOGivEFPv95vXcNZ5UOFoJ8IpfOoaG+awKBgQDGSYlDadNI4CyCrCPL\nyla98dNVO4djizuGOAHTpFwyVD73hbAnG7LfHkuiCkRc0Og+FJw0i8wGKzvgpYr0\nrXJH1xpVJMnpVITCc3+NL5NBrBmwSpimI7ixSlPB5o6/WcqFeiR8dewxKU4huRC6\ny90CI490PfFKi/jGfvOvLdPipwKBgQC2jz7ZgDv/2NhMHjXQSSlfS1bLArrC6sVk\nWYWPPiWqXxD8u+fd4BUCctAXJPUd57fcI1gmPLbdaguAYcKUY/PQNXBj29BWfkjr\nFBB/r/tbzn6/LgojZVKtdb/yhK3qwR7rfnKzYHlN6Yc1tnfPSwlAbKdu7RfKD6m5\nZEcYXtHm+wKBgQCcGsqYqxiu1+XS3ki0KNDPazHQeTQmdzfee/tcLppy+QY1gidj\nMphItaYfpOubEtC0By/O4nw2IxVZz5os9NvymPLfMz5Olr6KA7nYYisRWbdDpga1\nTYwa74QvNB8PoFYjbTyKS6AuN/GN9Q+pr9OH2o0Wm6l54eZyBwI72N1mIwKBgEUI\nWc3JTebrSq9N5S+D2t8sD//oYlL+j/HoYDbQW1HXbQcEzyL5bzhjzghSc1YBn2bg\n/p5G6ydCyGKdlQSj3zhmXL+GCXwLeOtbxPljxHrs1MTaVf8Ye3EYS6MbROC2cki+\nogTugDBUFErdWuTKDQ+NhqrNgOdpkNaH8tJmWJ0tAoGAXCBCG8CsgJKbZ8XJWPdZ\nI0Jj+DiYK2TFYGwLvcn78+X8NUpEoUvTjkkyDbzRUR8DLH35HWgfhPT523QTZJ8N\n785a++sTu0pnD/amBuCv3PGcNqVJ1nnY6G/Ji4PNFg1Odrfv9fNU+Gp8sfJq8HZC\nBhyOVKZXKZRj4bfDu4enALk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "card-bot@card-project-2024.iam.gserviceaccount.com",
+  "client_id": "105372455982564284360",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/card-bot%40card-project-2024.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

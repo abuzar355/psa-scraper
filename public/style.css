@@ -7,7 +7,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #a48ebb, #bfcce4); /* Gradient background */
+    background: url('bg-image.jpg') no-repeat center center fixed; 
+    background-size: cover;    
     color: #333;
     display: flex;
     justify-content: center;
@@ -30,8 +31,14 @@ ul {
 
 h1 {
     font-size: 2em;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     color: #444;
+    font-family: 'Georgia', serif; /* You can use Google Fonts like Roboto */
+    font-size: 3em;
+    color: #4f6174; /* A nice blue color */
+    letter-spacing: 2px; /* Adds space between letters */
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for depth */
 }
 
 /* Styling for file input and button container */
@@ -50,6 +57,19 @@ input[type="file"] {
     margin-bottom: 15px; /* Add space below the file input */
 }
 
+.input-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Add space between inputs */
+    margin-bottom: 20px; /* Add space below the input fields */
+}
+
+.input-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
 button {
     padding: 10px 20px;
     border: none;
@@ -109,3 +129,189 @@ br {
         border: 1px solid #ddd;
         border-radius: 4px;
     }
+
+
+    #uploadForm, h1 {
+        margin-right: 30%;
+    }
+
+
+
+
+    /* Styling for the instructions section */
+#instructions {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-right: 500px;
+}
+
+#instructions h3 {
+    color: #444;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+#instructions ul {
+    margin-left: 20px;
+}
+
+#instructions ul ul {
+    list-style-type: circle;
+}
+
+#instructions ul li {
+    margin-bottom: 10px;
+}
+
+#instructions table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#instructions table, #instructions th, #instructions td {
+    border: 1px solid #ddd;
+}
+
+#instructions th, #instructions td {
+    padding: 8px;
+    text-align: left;
+}
+
+#instructions th {
+    background-color: #f1f1f1;
+}
+/* Styling for the header */
+header {
+    width: 25%;
+    position: fixed; /* Keeps the header fixed at the top */
+    top:2%;
+    left: 2%;
+    background: transparent; /* Gradient background */
+    padding: 15px 0;
+    z-index: 1000;
+    align-items: center; /* Ensures the header stays on top of other elements */
+  }
+  
+  /* Navigation bar styling */
+  nav ul {
+    list-style-type: none; /* Remove bullets */
+    display: flex; /* Align the list items horizontally */
+    justify-content: center; /* Center the navigation items */
+    margin: 0; /* Remove any extra margin */
+    padding: 0; /* Remove any extra padding */
+    background: transparent; /* Gradient background */
+
+  }
+  
+  /* Styling for list items */
+  nav ul li {
+    margin-right: 20px; /* Space between the links */
+    background: linear-gradient(to right, #a48ebb, #bfcce4); /* Gradient background */
+
+  }
+  
+  /* Styling for the links */
+  nav ul li a {
+    color: #050404; /* White text color */
+    text-decoration: none; /* Remove the underline */
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color:  #d9dddf; /* Background color of the menu items */
+    border-radius: 13px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+    
+  }
+  
+  /* Change background color on hover */
+  nav ul li a:hover {
+    background-color: #575757; /* Slightly lighter background on hover */
+  }
+  
+  /* Active/current link */
+  nav ul li a.active {
+    background-color: #4CAF50; /* Highlight active link */
+    color: white;
+  }
+  
+  /* Adjust main content to account for the fixed header */
+  .content {
+    margin-top: 80px; /* Add space at the top so content doesn't overlap with the header */
+  }
+  
+  .heading2{
+    margin-right: 0%;
+
+    width: 800px;
+  }
+  .heading2 h1 {
+    font-family: 'Georgia', serif; /* You can use Google Fonts like Roboto */
+    font-size: 3em;
+    color: #4f6174; /* A nice blue color */
+    letter-spacing: 2px; /* Adds space between letters */
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for depth */
+}
+  #imageUploadForm{
+    margin-right: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .file-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Add space between label and input */
+    margin-bottom: 20px; /* Space below file input */
+    margin-top: 20px; /* Space below file input */
+
+}
+
+.result-container {
+
+    margin-top: 30px;
+}
+
+/* Spinner styles */
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #007BFF;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Styling the in-progress message */
+  #loading p {
+    font-size: 1.2em;
+    color: #333;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  /* Center the spinner and message */
+  #loading {
+    display: flex;
+    flex-direction: column;
+    align-items: auto;
+    justify-content: center;
+    margin-top: 20px;
+    margin-right: 30%;
+    margin-bottom: 20px;
+
+  }
+  

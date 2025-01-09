@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI - Extractor Player Names</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <nav>
+          <ul>
+            <li><a href="index.html">Price Scraper</a></li>
+            <li><a href="extract-player.html">Extract Player Names</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div id="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+    
+      <div class="heading2">
+        
+        <h1>AI - Extractor</h1>
+      </div>
+    
+    <form id="imageUploadForm" enctype="multipart/form-data">
+        <div class="file-input-container">
+            <label for="fileInput">Upload Baseball Card Image:</label>
+            <input type="file" id="fileInput" name="fileInput" accept="image/*" multiple required />
+        </div>
+        <div class="input-container">
+            <input type="text" id="setName" name="setName" placeholder="Set Name" />
+            <input type="text" id="grade" name="grade" placeholder="Grade" />
+        </div>
+
+        <button id="extractPlayerBtn" type="button" onclick="extractPlayerNames()">Extract Player Name</button><br><br>
+        <div id="result-container" style="display: none;">
+            <a id="sheetLink" href="#" target="_blank">Open Google Sheet</a>
+            <button id="copyLinkBtn" onclick="copyLink()">Copy Link</button>
+          </div>
+          
+    </form>
+    <div id="progress-container">
+        <h3>Extraction Progress</h3>
+        <ul id="progress-list"></ul>
+    </div>
+    
+
+    <script>
+        const socket = io(); 
+
+        socket.on('connect', () => {
+            console.log('Connected to server with Socket ID:', socket.id);
+                });
+
+        socket.on('log', (data) => {
+            const progressList = document.getElementById('progress-list');
+            const newItem = document.createElement('li');
+            newItem.textContent = data.message;
+            progressList.appendChild(newItem);
+        });
+
+        function extractPlayerNames() {
+                 const fileInput = document.getElementById('fileInput');
+                 let setName = document.getElementById('setName').value;
+                let grade = document.getElementById('grade').value;
+                const loading = document.getElementById('loading');
+                const resultContainer = document.getElementById('result-container');
+
+                const files = fileInput.files;
+
+    if (files.length === 0) {
+        alert('Please select at least one image file.');
+        return;
+    }
+
+    if (!setName || !grade) {
+        setName = '';
+        grade = '';
+    }
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        formData.append('fileInput', files[i]);
+    }
+    
+    formData.append('setName', setName);
+    formData.append('grade', grade);
+
+    // Show spinner and hide result container
+    loading.style.display = 'block';
+    resultContainer.style.display = 'none';
+
+
+    // Send the files to the server
+    fetch('/extract-player', {
+        method: 'POST',
+        headers: {
+                    'Socket-ID': socket.id
+                },
+        body: formData
+    }).then(response => response.json())
+      .then(data => {
+          console.log('Player names extracted:', data);
+          loading.style.display = 'none';
+
+            // Display the link and make it clickable
+          const sheetLink = document.getElementById('sheetLink');
+          sheetLink.href = data.link;
+          sheetLink.textContent = 'Open Google Sheet';
+          resultContainer.style.display = 'block'; // Show the link      
+          }).catch(error => {
+          console.error('Error:', error);
+      });
+}
+
+
+
+
+        function copyLink() {
+    const sheetLink = document.getElementById('sheetLink').href;
+    navigator.clipboard.writeText(sheetLink).then(() => {
+        alert('Link copied to clipboard!');
+    }).catch(err => {
+        console.error('Error copying link:', err);
+    });
+}
+
+    </script>
+</body>
+</html>

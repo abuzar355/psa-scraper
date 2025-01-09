@@ -100,7 +100,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-        executablePath: puppeteer.executablePath() || process.env.EXECUTEABLE_PATH || '/app/.apt/opt/google/chrome/chrome',
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome', // Updated path for Heroku
         headless: true,
         args: [
           '--no-sandbox',
@@ -110,13 +110,13 @@ async function scrapeData(set_name,grade_value, socketId, data) {
           '--no-first-run',
           '--no-zygote',
           '--single-process',
-          '--disable-gpu'
-        ]
+          '--disable-gpu',
+        ],
       });
       
       const page = await browser.newPage();
 
-      await page.screenshot({ path: '/tmp/initial-load.png', fullPage: true });
+      await page.screenshot({ path: 'initial-load.png', fullPage: true });
 
   // Go to the site
   await page.goto("https://www.psacard.com/auctionprices", { waitUntil: 'networkidle2', timeout: 60000 });
@@ -125,7 +125,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
   // Enter the set name into the search field
   await page.type('#search', set_name);
 
-  await page.screenshot({ path: '/tmp/searching.png', fullPage: true });
+  await page.screenshot({ path: 'searching.png', fullPage: true });
 
   await delay(2000);
   await page.focus('#search'); // Focus on the search input (optional if #search is already focused)
@@ -134,7 +134,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
 
   await delay(3000);
 
-  await page.screenshot({ path: '/tmp/after-search.png', fullPage: true });
+  await page.screenshot({ path: 'after-search.png', fullPage: true });
 
 
   await page.evaluate(() => {
@@ -151,17 +151,17 @@ async function scrapeData(set_name,grade_value, socketId, data) {
   io.to(socketId).emit('log', { message: `Bsaseball button clicked` });
 
   await delay(5000);
-  await page.screenshot({ path: '/tmp/after-baseball.png', fullPage: true });
+  await page.screenshot({ path: 'after-baseball.png', fullPage: true });
 
   // Print the element data to the console
   //console.log('Element Data:', elementData);
-  await page.waitForSelector('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a',{ timeout: 60000 });
+  await page.waitForSelector('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a',{ timeout: 600000 });
 
   await page.click('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a');
   io.to(socketId).emit('log', { message: 'Clicked on the first item link.' });
 
-  //const links = await page.$$('a'); // Select all anchor tags
-  //let found2 = false;
+  // const links = await page.$$('a'); // Select all anchor tags
+  // let found2 = false;
   
   // for (let link of links) {
   //     const text = await page.evaluate(el => el.textContent.trim().toLowerCase(), link); // Convert to lowercase
@@ -182,7 +182,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
 
 
   await delay(5000);
-  await page.screenshot({ path: '/tmp/after-first-link.png', fullPage: true });
+  await page.screenshot({ path: 'after-first-link.png', fullPage: true });
 
   // Locate the breadcrumb link containing the set name
 const breadcrumbLinks = await page.$$('ul.flex.items-center.gap-x-2 li a');
@@ -204,7 +204,7 @@ if (!found) {
 }
 
 await delay(5000);
-await page.screenshot({ path: '/tmp/after-breadcrumbs-link.png', fullPage: true });
+await page.screenshot({ path: 'after-breadcrumbs-link.png', fullPage: true });
 
 
   // Select the grade
@@ -241,7 +241,7 @@ if (!gradeFound) {
 
 await delay(5000);
 
-await page.screenshot({ path: '/tmp/after-grade.png', fullPage: true });
+await page.screenshot({ path: 'after-grade.png', fullPage: true });
 
 
 
@@ -284,7 +284,7 @@ if (searchBox) {
   await page.type("input#search-set", player_name);
   io.to(socketId).emit('log', { message: `Searching for player: ${player_name}` });
   await delay(3000); // Allow time for the search results to load
-  await page.screenshot({ path: '/tmp/after-input-playername.png', fullPage: true });
+  await page.screenshot({ path: 'after-input-playername.png', fullPage: true });
 
   // Retrieve rows from the results table
   rows = await page.$$('table.w-full tbody tr');
@@ -383,7 +383,7 @@ server.listen(PORT, () => {
 const keyFile = './creden.json';
 
 
-const  apiKey = process.env.OPENAI_API_KEY ||'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'; // Replace with your OpenAI API key
+const  apiKey = process.env.OPENAI_API_KEY ||'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'; // Replace with your OpenAI API key
 
 
 /**
