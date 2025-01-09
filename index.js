@@ -100,7 +100,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome', // Updated path for Heroku
+        product: 'firefox', // Explicitly specify Firefox
         headless: true,
         args: [
           '--no-sandbox',
@@ -113,6 +113,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
           '--disable-gpu',
         ],
       });
+      
       
       const page = await browser.newPage();
 
@@ -153,32 +154,14 @@ async function scrapeData(set_name,grade_value, socketId, data) {
   await delay(5000);
   await page.screenshot({ path: 'after-baseball.png', fullPage: true });
 
-  // Print the element data to the console
-  //console.log('Element Data:', elementData);
-  await page.waitForSelector('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a',{ timeout: 600000 });
+  const elementExists = await page.$('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a') !== null;
+  console.log('Element exists:', elementExists);
+
+  await page.waitForSelector('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a',{ timeout: 30000 });
 
   await page.click('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a');
   io.to(socketId).emit('log', { message: 'Clicked on the first item link.' });
 
-  // const links = await page.$$('a'); // Select all anchor tags
-  // let found2 = false;
-  
-  // for (let link of links) {
-  //     const text = await page.evaluate(el => el.textContent.trim().toLowerCase(), link); // Convert to lowercase
-  //     if (text.includes(set_name.toLowerCase())) { // Compare with lowercase `set_name`
-  //         console.log(`Found link: ${text}`); // Log the found link text
-  //         await link.scrollIntoViewIfNeeded(); // Scroll to make it visible if needed
-  //         await link.click(); // Click the link
-  //         console.log(`Clicked on link with text: ${text}`);
-  //         found2 = true;
-  //         break; // Exit loop after clicking the first match
-  //     }
-  // }
-  
-  // if (!found2) {
-  //     console.error(`No link found containing text: ${set_name}`);
-  // }
-  
 
 
   await delay(5000);
