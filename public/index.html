@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSA Cards Price Scraper</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>PSA Cards Price Scraper</h1>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="fileInput" accept=".csv, .xlsx" required />
+        <button id="startScrapingBtn" type="button" onclick="startScraping()">Start Scrape</button>
+    </form>
+
+    <div id="progress-container">
+        <h3>Scraping Progress</h3>
+        <ul id="progress-list"></ul>
+    </div>
+
+    <script>
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('Connected to server with Socket ID:', socket.id);
+        });
+
+        socket.on('file_data', function (data) {
+                downloadCSVData(data.data);
+            }  );
+
+        socket.on('log', (data) => {
+            const progressList = document.getElementById('progress-list');
+            const newItem = document.createElement('li');
+            newItem.textContent = data.message;
+            progressList.appendChild(newItem);
+        });
+
+        function startScraping() {
+            const formData = new FormData(document.getElementById('uploadForm'));
+            fetch('/process', {
+                method: 'POST',
+                headers: {
+                    'Socket-ID': socket.id
+                },
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    alert('Scraping started!');
+                } else {
+                    alert('Error starting scrape');
+                }
+            });
+        }
+
+        function downloadCSVData(data) {
+                const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = "updated_file.csv";
+                link.click();
+                updateProgress("Download initiated.");
+}
+    </script>
+</body>
+</html>

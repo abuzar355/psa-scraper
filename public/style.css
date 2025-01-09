@@ -1,0 +1,111 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #a48ebb, #bfcce4); /* Gradient background */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+p, ul {
+    color: #444;
+    font-size: 1em;
+    margin-bottom: 15px; /* Adjust the spacing as needed */
+}
+
+ul {
+    list-style-type: disc; /* Add bullet points */
+    padding-left: 20px; /* Indent the list */
+}
+
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Styling for file input and button container */
+.file-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="file"] {
+    padding: 8px 15px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    margin-bottom: 15px; /* Add space below the file input */
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+#downloadBtn {
+    margin-top: 20px;
+}
+
+br {
+    margin-bottom: 10px;
+}
+
+
+    /* Basic styling for the progress sidebar */
+    #progress-container {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 400px;
+        height: 100%;
+        background-color: #f1f1f1;
+        border-left: 1px solid #ccc;
+        padding: 10px;
+        overflow-y: auto;
+    }
+    #progress-container h3 {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+    }
+    #progress-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    #progress-list li {
+        margin-bottom: 10px;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
