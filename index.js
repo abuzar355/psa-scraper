@@ -100,7 +100,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-        product: 'firefox', // Explicitly specify Firefox
+        product: 'firefox',
         headless: true,
         args: [
           '--no-sandbox',
