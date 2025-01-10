@@ -100,7 +100,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-        executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium-browser', // Use system Chromium if available
+        //executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium-browser', // Use system Chromium if available
         headless: true,
         args: [
           '--no-sandbox', // Required for non-root environments
