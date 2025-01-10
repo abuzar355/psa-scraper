@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "apt-get update && apt-get install -y chromium-browser",
+    "build": "apt-get update && apt-get install -y chromium && which chromium && which chromium-browser && ls /usr/bin",
     "start": "node index.js"  
   },
   "keywords": [],
