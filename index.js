@@ -95,6 +95,7 @@ async function scrapeData(set_name, grade_value, socketId, data) {
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_PATH || "/opt/render/project/src/chromium/linux-1404818/chrome-linux/chrome" || puppeteer.executablePath(),
     headless: true,
+    
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
