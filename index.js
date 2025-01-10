@@ -99,15 +99,12 @@ async function scrapeData(set_name,grade_value, socketId, data) {
           setTimeout(resolve, time);
         });
       }
-      process.env.PUPPETEER_CACHE_DIR = '/opt/render/.cache/puppeteer';
-
       const browser = await puppeteer.launch({
-        executablePath: process.env.CHROMIUM_PATH || '/opt/render/.cache/puppeteer/chrome/linux-131.0.6778.264/chrome-linux64/chrome', // Use system Chromium if available
         headless: true,
         args: [
-          '--no-sandbox', // Required for non-root environments
+          '--no-sandbox', 
           '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage', // Reduces memory issues
+          '--disable-dev-shm-usage',
           '--disable-accelerated-2d-canvas',
           '--no-first-run',
           '--no-zygote',
