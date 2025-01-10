@@ -93,7 +93,7 @@ async function scrapeData(set_name, grade_value, socketId, data) {
     });
   }
   const browser = await puppeteer.launch({
-    //executablePath: "/opt/render/project/src/chromium/linux-1404818/chrome-linux/chrome" || puppeteer.executablePath(),
+    executablePath: process.env.CHROME_PATH || "/opt/render/project/src/chromium/linux-1404818/chrome-linux/chrome" || puppeteer.executablePath(),
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
@@ -148,24 +148,7 @@ async function scrapeData(set_name, grade_value, socketId, data) {
   );
   io.to(socketId).emit("log", { message: "Clicked on the first item link." });
 
-  // const links = await page.$$('a'); // Select all anchor tags
-  // let found2 = false;
 
-  // for (let link of links) {
-  //     const text = await page.evaluate(el => el.textContent.trim().toLowerCase(), link); // Convert to lowercase
-  //     if (text.includes(set_name.toLowerCase())) { // Compare with lowercase `set_name`
-  //         console.log(`Found link: ${text}`); // Log the found link text
-  //         await link.scrollIntoViewIfNeeded(); // Scroll to make it visible if needed
-  //         await link.click(); // Click the link
-  //         console.log(`Clicked on link with text: ${text}`);
-  //         found2 = true;
-  //         break; // Exit loop after clicking the first match
-  //     }
-  // }
-
-  // if (!found2) {
-  //     console.error(`No link found containing text: ${set_name}`);
-  // }
 
   await delay(5000);
   await page.screenshot({ path: "after-first-link.png", fullPage: true });
@@ -404,8 +387,8 @@ server.listen(PORT, () => {
 const keyFile = "./creden.json";
 
 const apiKey =
-  process.env.OPENAI_API_KEY ||"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";
-/**
+  process.env.OPENAI_API_KEY ;
+  /**
  * Encode image as base64
  * @param {string} imagePath - The path to the image file
  * @returns {string} - Base64 encoded image
