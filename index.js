@@ -19,15 +19,7 @@ const { Configuration, OpenAIApi } = require("openai");
 const OpenAI = require('openai');
 const axios = require('axios');
 const sheetsV4 = google.sheets('v4');
-const chromiumPath = process.env.CHROMIUM_PATH;
 
-fs.access(chromiumPath, fs.constants.X_OK, (err) => {
-  if (err) {
-    console.error('Chromium binary is not executable or missing:', chromiumPath, err.message);
-  } else {
-    console.log('Chromium binary is executable:', chromiumPath);
-  }
-});
 
 // Multer setup for file uploads
 const upload = multer({ dest: 'uploads/' });
