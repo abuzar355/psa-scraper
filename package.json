@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npx @puppeteer/browsers install chromium",
-    "start": "node index.js"  
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,9 +16,7 @@
     "csv-parser": "^3.0.0",
     "csv-stringify": "^5.6.5",
     "express": "^4.19.2",
-    "gaxios": "^6.7.1",
     "googleapis": "^144.0.0",
-    "gtoken": "^7.1.0",
     "multer": "^1.4.5-lts.1",
     "openai": "^4.58.2",
     "puppeteer": "^24.0.0",
