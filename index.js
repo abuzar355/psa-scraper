@@ -91,7 +91,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-        channel: 'chrome',
+        executablePath: '/opt/render/project/src/chromium/linux-1404788/chrome-linux/chrome' || puppeteer.executablePath(),
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
