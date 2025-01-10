@@ -91,10 +91,10 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
+        channel: 'chrome',
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
-      
       const page = await browser.newPage();
 
       await page.screenshot({ path: 'initial-load.png', fullPage: true });
