@@ -100,12 +100,12 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-       // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome', // Updated path for Heroku
+        executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium-browser', // Use system Chromium if available
         headless: true,
         args: [
-          '--no-sandbox',
+          '--no-sandbox', // Required for non-root environments
           '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
+          '--disable-dev-shm-usage', // Reduces memory issues
           '--disable-accelerated-2d-canvas',
           '--no-first-run',
           '--no-zygote',
