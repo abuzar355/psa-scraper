@@ -139,7 +139,6 @@ async function scrapeData(set_name,grade_value, socketId, data) {
 
   // Print the element data to the console
   //console.log('Element Data:', elementData);
-  await page.waitForSelector('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a',{ timeout: 600000 });
 
   await page.click('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a');
   io.to(socketId).emit('log', { message: 'Clicked on the first item link.' });
