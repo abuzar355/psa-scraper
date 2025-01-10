@@ -385,7 +385,7 @@ server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-const keyFile = "./creden.json";
+const keyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
 const apiKey =
   process.env.OPENAI_API_KEY ;
