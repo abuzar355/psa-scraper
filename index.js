@@ -99,6 +99,8 @@ async function scrapeData(set_name,grade_value, socketId, data) {
           setTimeout(resolve, time);
         });
       }
+      process.env.PUPPETEER_CACHE_DIR = '/tmp/puppeteer_cache';
+
       const browser = await puppeteer.launch({
         //executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium-browser', // Use system Chromium if available
         headless: true,

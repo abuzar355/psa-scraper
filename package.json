@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "postinstall": "rm -rf /opt/render/.cache/puppeteer && npx puppeteer install --browser chromium",
+    "postinstall": "PUPPETEER_CACHE_DIR=/tmp/puppeteer_cache npx puppeteer install --browser chromium",
     "start": "node index.js"  
   },
   "keywords": [],
