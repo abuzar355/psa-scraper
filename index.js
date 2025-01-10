@@ -37,6 +37,9 @@ app.post('/process', upload.single('fileInput'), async (req, res) => {
     return res.status(400).json({ error: 'No file uploaded' });
   }
 
+// Serve screenshots from the current directory
+app.use('/screenshots', express.static(path.join(__dirname, 'screenshots')));
+
 
 
   const filePath = path.join(__dirname, 'uploads', req.file.filename);
@@ -91,7 +94,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-        executablePath: '/opt/render/project/src/chromium/linux-1404788/chrome-linux/chrome' || puppeteer.executablePath(),
+        executablePath: '/opt/render/project/src/chromium/linux-1404818/chrome-linux/chrome' || puppeteer.executablePath(),
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
