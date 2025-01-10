@@ -27,16 +27,6 @@ console.log (puppeteer.executablePath());
 // Serve static files (like your HTML file)
 app.use(express.static('public'));
 
-app.get('/download', (req, res) => {
-  const filePath = path.join(__dirname, 'images4.tar.gz');
-  console.log('File Path:', filePath);
-
-  res.download(filePath, 'images4.tar.gz', (err) => {
-      if (err) {
-          console.error('Error downloading file:', err);
-      }
-  });
-});
 
 // Handle file upload and start scraping process
 app.post('/process', upload.single('fileInput'), async (req, res) => {
