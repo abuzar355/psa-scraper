@@ -19,7 +19,6 @@ const { Configuration, OpenAIApi } = require("openai");
 const OpenAI = require('openai');
 const axios = require('axios');
 const sheetsV4 = google.sheets('v4');
-const fs = require('fs');
 const chromiumPath = process.env.CHROMIUM_PATH;
 
 fs.access(chromiumPath, fs.constants.X_OK, (err) => {
