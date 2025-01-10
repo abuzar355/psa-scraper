@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const socketIo = require('socket.io');
 const http = require('http');
@@ -100,7 +100,7 @@ async function scrapeData(set_name,grade_value, socketId, data) {
         });
       }
       const browser = await puppeteer.launch({
-        product: 'firefox',
+       // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome', // Updated path for Heroku
         headless: true,
         args: [
           '--no-sandbox',
@@ -113,7 +113,6 @@ async function scrapeData(set_name,grade_value, socketId, data) {
           '--disable-gpu',
         ],
       });
-      
       
       const page = await browser.newPage();
 
@@ -154,14 +153,32 @@ async function scrapeData(set_name,grade_value, socketId, data) {
   await delay(5000);
   await page.screenshot({ path: 'after-baseball.png', fullPage: true });
 
-  const elementExists = await page.$('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a') !== null;
-  console.log('Element exists:', elementExists);
-
-  await page.waitForSelector('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a',{ timeout: 30000 });
+  // Print the element data to the console
+  //console.log('Element Data:', elementData);
+  await page.waitForSelector('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a',{ timeout: 600000 });
 
   await page.click('table.w-full.border.border-neutralstroke2 tbody tr:first-child td:first-child a');
   io.to(socketId).emit('log', { message: 'Clicked on the first item link.' });
 
+  // const links = await page.$$('a'); // Select all anchor tags
+  // let found2 = false;
+  
+  // for (let link of links) {
+  //     const text = await page.evaluate(el => el.textContent.trim().toLowerCase(), link); // Convert to lowercase
+  //     if (text.includes(set_name.toLowerCase())) { // Compare with lowercase `set_name`
+  //         console.log(`Found link: ${text}`); // Log the found link text
+  //         await link.scrollIntoViewIfNeeded(); // Scroll to make it visible if needed
+  //         await link.click(); // Click the link
+  //         console.log(`Clicked on link with text: ${text}`);
+  //         found2 = true;
+  //         break; // Exit loop after clicking the first match
+  //     }
+  // }
+  
+  // if (!found2) {
+  //     console.error(`No link found containing text: ${set_name}`);
+  // }
+  
 
 
   await delay(5000);
@@ -366,9 +383,7 @@ server.listen(PORT, () => {
 const keyFile = './creden.json';
 
 
-const  apiKey = process.env.OPENAI_API_KEY ||'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'; // Replace with your OpenAI API key
-
-
+const  apiKey = process.env.OPENAI_API_KEY ||'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';
 /**
  * Encode image as base64
  * @param {string} imagePath - The path to the image file
