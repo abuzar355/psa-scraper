@@ -36,7 +36,6 @@ app.post("/process", upload.single("fileInput"), async (req, res) => {
   }
 
   // Serve screenshots from the current directory
-  app.use("/screenshots", express.static(path.join(__dirname, "screenshots")));
 
   const filePath = path.join(__dirname, "uploads", req.file.filename);
 
@@ -71,10 +70,22 @@ app.post("/process", upload.single("fileInput"), async (req, res) => {
 
 function generateCSVAndSend(data, socketId) {
   try {
-    // Generate CSV in memory
-    const csvOutput = stringify(data, { header: true });
+    // Force all columns you want:
+    const columns = [
+      "Player",
+      "Set",
+      "Grade",
+      "Number",
+      "Recent Price",
+      "Average Price",
+    ];
 
-    // Emit the CSV data to the client for download
+    // Now pass `columns` to csv-stringify
+    const csvOutput = stringify(data, {
+      header: true,
+      columns, // <--- set the columns explicitly
+    });
+
     io.to(socketId).emit("file_data", {
       filename: "updated_file.csv",
       data: csvOutput,
@@ -85,6 +96,7 @@ function generateCSVAndSend(data, socketId) {
     });
   }
 }
+
 // Scraping logic using Puppeteer
 async function scrapeData(set_name, grade_value, socketId, data) {
   function delay(time) {
@@ -95,51 +107,61 @@ async function scrapeData(set_name, grade_value, socketId, data) {
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_PATH || "/opt/render/project/src/chromium/linux-1404818/chrome-linux/chrome" || puppeteer.executablePath(),
     headless: true,
-    
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process',
+      '--disable-gpu'
+    ]
   });
   const page = await browser.newPage();
 
-  await page.screenshot({ path: "initial-load.png", fullPage: true });
+  //await page.screenshot({ path: "initial-load.png", fullPage: true });
 
   // Go to the site
-  await page.goto("https://www.psacard.com/auctionprices", {
-    waitUntil: "networkidle2",
-    timeout: 60000,
-  });
+  await page.goto("https://www.psacard.com/auctionprices");
   io.to(socketId).emit("log", {
     message: `Navigated to search results for set: ${set_name}`,
   });
 
+  await delay(5000);
+
   // Enter the set name into the search field
   await page.type("#search", set_name);
 
-  await page.screenshot({ path: "searching.png", fullPage: true });
+  //await page.screenshot({ path: "searching.png", fullPage: true });
 
   await delay(2000);
   await page.focus("#search"); // Focus on the search input (optional if #search is already focused)
   await page.keyboard.press("Enter");
   io.to(socketId).emit("log", { message: `Searching for set: ${set_name}` });
 
-  await delay(3000);
+  await delay(10000);
 
-  await page.screenshot({ path: "after-search.png", fullPage: true });
+  //await page.screenshot({ path: "after-search.png", fullPage: true });
 
   await page.evaluate(() => {
     const buttons = Array.from(document.querySelectorAll("button"));
     const baseballButton = buttons.find(
       (button) => button.textContent.trim() === "Baseball Cards"
     );
+
     if (baseballButton) {
       baseballButton.click();
+
     } else {
       console.log("Baseball button not found");
     }
   });
+
   io.to(socketId).emit("log", { message: `Bsaseball button clicked` });
 
   await delay(5000);
-  await page.screenshot({ path: "after-baseball.png", fullPage: true });
+ // await page.screenshot({ path: "after-baseball.png", fullPage: true });
 
   // Print the element data to the console
   //console.log('Element Data:', elementData);
@@ -152,7 +174,7 @@ async function scrapeData(set_name, grade_value, socketId, data) {
 
 
   await delay(5000);
-  await page.screenshot({ path: "after-first-link.png", fullPage: true });
+  //await page.screenshot({ path: "after-first-link.png", fullPage: true });
 
   // Locate the breadcrumb link containing the set name
   const breadcrumbLinks = await page.$$("ul.flex.items-center.gap-x-2 li a");
@@ -178,7 +200,7 @@ async function scrapeData(set_name, grade_value, socketId, data) {
   }
 
   await delay(5000);
-  await page.screenshot({ path: "after-breadcrumbs-link.png", fullPage: true });
+  //await page.screenshot({ path: "after-breadcrumbs-link.png", fullPage: true });
 
   // Select the grade
   // Select the grade using a CSS selector
@@ -218,7 +240,7 @@ async function scrapeData(set_name, grade_value, socketId, data) {
 
   await delay(5000);
 
-  await page.screenshot({ path: "after-grade.png", fullPage: true });
+  //await page.screenshot({ path: "after-grade.png", fullPage: true });
 
   const searchBox2 = await page.$("input#search-set");
   if (!searchBox2) {
@@ -262,10 +284,10 @@ async function scrapeData(set_name, grade_value, socketId, data) {
           message: `Searching for player: ${player_name}`,
         });
         await delay(3000); // Allow time for the search results to load
-        await page.screenshot({
-          path: "after-input-playername.png",
-          fullPage: true,
-        });
+     //   await page.screenshot({
+      ///    path: "after-input-playername.png",
+      //    fullPage: true,
+      //  });
 
         // Retrieve rows from the results table
         rows = await page.$$("table.w-full tbody tr");
@@ -326,6 +348,9 @@ async function scrapeData(set_name, grade_value, socketId, data) {
             const avg_price = await row.$eval("td:nth-child(4)", (el) =>
               el.textContent.trim()
             );
+            console.log("Number =", number);
+            console.log("avg_price =", avg_price);
+            console.log("recent_price =", recent_price);
 
             if (first_row) {
               // Update the first row for the player
@@ -359,6 +384,9 @@ async function scrapeData(set_name, grade_value, socketId, data) {
         io.to(socketId).emit("log", {
           message: `No data found for player: ${player_name}`,
         });
+        processedPlayers.add(player_name);
+        continue;
+        
       }
     } catch (error) {
       io.to(socketId).emit("log", {
@@ -368,6 +396,8 @@ async function scrapeData(set_name, grade_value, socketId, data) {
   }
 
   await browser.close();
+  console.log("DATA LENGTH BEFORE WRITING =", data.length);
+  console.log("DATA BEFORE WRITING =", data);
 
   // Save the updated data into CSV
   generateCSVAndSend(data, socketId);
